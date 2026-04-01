@@ -1,13 +1,14 @@
 // audio.js
 
+// Create AudioContext
 const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 
-// Unlock audio
+// Unlock audio on first click
 document.addEventListener('click', () => {
   if (audioCtx.state === 'suspended') audioCtx.resume();
 });
 
-// Map instrument type to audio file
+// Map instruments to single WAV files
 const instrumentFiles = {
   "piano": "piano.wav",
   "drum": "drum.wav",
@@ -19,12 +20,11 @@ let rhythm = [];
 let recording = false;
 let startTime = 0;
 
-// Play MP3 audio for selected instrument
+// Play audio (single WAV per instrument)
 function playAudio(instrument) {
   const audioFile = instrumentFiles[instrument];
   if (!audioFile) return;
 
-  // Use fetch + AudioContext to play WAV reliably
   fetch(audioFile)
     .then(response => response.arrayBuffer())
     .then(arrayBuffer => audioCtx.decodeAudioData(arrayBuffer))
@@ -37,15 +37,15 @@ function playAudio(instrument) {
     .catch(err => console.error("Audio error:", err));
 }
 
-// Tap function: plays audio and visual feedback, records if recording
+// Tap function: plays audio, visual feedback, and records rhythm
 function tap(stressType) {
   const instrument = document.getElementById("instrument").value;
   const stressed = stressType === "1";
 
-  // Play the audio (same for stressed/unstressed)
+  // Play selected instrument
   playAudio(instrument);
 
-  // Visual feedback changes for stress
+  // Show visual feedback
   showTap(stressed);
 
   // Record rhythm if recording
@@ -57,24 +57,29 @@ function tap(stressType) {
   }
 }
 
-// Visual feedback for tap
+// Visual feedback function: bouncing circle
 function showTap(stressed) {
-  let visual = document.getElementById("tapVisual");
-  let circle = document.createElement("div");
+  const visual = document.getElementById("tapVisual");
+  const circle = document.createElement("div");
 
-  circle.style.width = "30px";
-  circle.style.height = stressed ? "60px" : "30px";
+  circle.style.width = stressed ? "60px" : "40px";
+  circle.style.height = stressed ? "60px" : "40px";
   circle.style.background = stressed ? "red" : "blue";
   circle.style.display = "inline-block";
   circle.style.margin = "5px";
   circle.style.borderRadius = "50%";
+  circle.style.transform = "scale(0)";
+  circle.style.transition = "transform 0.2s ease, opacity 0.5s ease";
 
   visual.appendChild(circle);
 
+  // Bounce animation
+  setTimeout(() => { circle.style.transform = "scale(1.2)"; }, 10);
+  setTimeout(() => { circle.style.transform = "scale(1)"; }, 210);
   setTimeout(() => circle.remove(), 500);
 }
 
-// Rhythm recording functions
+// Start rhythm recording
 function startRhythmRecording() {
   rhythm = [];
   recording = true;
@@ -82,11 +87,13 @@ function startRhythmRecording() {
   alert("Recording started");
 }
 
+// Stop rhythm recording
 function stopRhythmRecording() {
   recording = false;
   alert("Recording stopped");
 }
 
+// Play recorded rhythm
 function playRhythm() {
   if (rhythm.length === 0) return;
 
