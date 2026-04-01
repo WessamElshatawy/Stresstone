@@ -1,3 +1,6 @@
+document.body.addEventListener('click', () => {
+  audioCtx.resume();
+});
 const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 
 function playTone(freq, duration) {
