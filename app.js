@@ -19,7 +19,23 @@ function animateCircle(i, stressed) {
   if (stressed) circles[i].classList.add("stressed");
   setTimeout(() => circles[i].classList.remove("stressed"), 300);
 }
+function showTap(stressed) {
+  let visual = document.getElementById("tapVisual");
+  let circle = document.createElement("div");
 
+  circle.style.width = "30px";
+  circle.style.height = stressed ? "60px" : "30px";
+  circle.style.background = stressed ? "red" : "blue";
+  circle.style.display = "inline-block";
+  circle.style.margin = "5px";
+  circle.style.borderRadius = "50%";
+
+  visual.appendChild(circle);
+
+  setTimeout(() => {
+    circle.remove();
+  }, 500);
+}
 function playWord() {
   playStress(currentWord.stress);
 }
