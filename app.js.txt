@@ -23,8 +23,7 @@ function animateCircle(i, stressed) {
 function playWord() {
   playStress(currentWord.stress);
 }
-
-loadWord();
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('service-worker.js');
 }
+loadWord();
