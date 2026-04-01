@@ -3,87 +3,51 @@
 <head>
   <meta charset="UTF-8">
   <title>StressTone</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-
 <header>
   <h1>StressTone</h1>
   <nav>
     <button onclick="showScreen('learn')">Learn</button>
-    <button onclick="showScreen('quiz')">Quiz</button>
-    <button onclick="showScreen('record')">Record</button>
-    <button onclick="showScreen('teacher')">Teacher</button>
     <button onclick="showScreen('demo')">Live Demo</button>
   </nav>
 </header>
 
 <main>
-  <!-- LEARN -->
+  <!-- LEARN SCREEN -->
   <section id="learn" class="screen">
-    <h2 id="wordTitle">banana</h2>
-    <div id="circles"></div>
-    <button onclick="playWord()">Play</button>
-    <button onclick="nextWord()">Next Word</button>
-  </section>
-
-  <!-- QUIZ -->
-  <section id="quiz" class="screen hidden">
-    <h2>Quiz</h2>
-    <button onclick="startQuiz()">Play Sound</button>
-    <div id="choices"></div>
-    <p id="score">Score: 0</p>
-  </section>
-
-  <!-- RECORD -->
-  <section id="record" class="screen hidden">
-    <h2>Record</h2>
-    <button onclick="startRecording()">Record</button>
-    <button onclick="stopRecording()">Stop</button>
-    <audio id="playback" controls></audio>
-  </section>
-
-  <!-- TEACHER -->
-  <section id="teacher" class="screen hidden">
-    <h2>Teacher Builder</h2>
-    <input id="newWord" placeholder="Enter word">
-    <input id="pattern" placeholder="Stress pattern e.g. 010">
-    <button onclick="saveWord()">Save</button>
+    <h2>Learn Mode</h2>
+    <div id="wordTitle"></div>
   </section>
 
   <!-- LIVE DEMO -->
   <section id="demo" class="screen hidden">
-  <h2>Live Tap Demo</h2>
+    <h2>Live Tap Demo</h2>
+    <label>Instrument:</label>
+    <select id="instrument">
+      <option value="piano">Piano</option>
+      <option value="drum">Drum</option>
+      <option value="bell">Bell</option>
+    </select>
 
-  <label>Instrument:</label>
-<select id="instrument">
-  <option value="piano">Piano</option>
-  <option value="drum">Drum</option>
-  <option value="bell">Bell</option>
-</select>
+    <div id="tapVisual"></div>
 
-<div id="tapVisual"></div>
+    <div class="tap-buttons">
+      <button onclick="tap('1')">Stressed</button>
+      <button onclick="tap('0')">Unstressed</button>
+    </div>
 
-<button onclick="startRhythmRecording()">Start Recording</button>
-<button onclick="stopRhythmRecording()">Stop Recording</button>
-<button onclick="playRhythm()">Play Rhythm</button>
+    <div class="record-controls">
+      <button onclick="startRhythmRecording()">Start Recording</button>
+      <button onclick="stopRhythmRecording()">Stop Recording</button>
+      <button onclick="playRhythm()">Play Recorded Rhythm</button>
+    </div>
+  </section>
 
-<!-- Stress buttons example -->
-<button onclick="tap('1')">Stressed</button>
-<button onclick="tap('0')">Unstressed</button>
-
-  <br><br>
-  <button onclick="startRhythmRecording()">Start Recording Rhythm</button>
-  <button onclick="stopRhythmRecording()">Stop Recording</button>
-  <button onclick="playRhythm()">Play Rhythm</button>
-</section>
 </main>
 
-<script src="./dictionary.js"></script>
 <script src="./audio.js"></script>
-<script src="./recorder.js"></script>
-<script src="./quiz.js"></script>
 <script src="./app.js"></script>
 
 </body>
