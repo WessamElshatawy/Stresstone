@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>StressTone</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="manifest" href="manifest.json">
+</head>
+<body>
+
+<header>
+  <h1>StressTone</h1>
+  <nav>
+    <button onclick="showScreen('learn')">Learn</button>
+    <button onclick="showScreen('quiz')">Quiz</button>
+    <button onclick="showScreen('record')">Record</button>
+    <button onclick="showScreen('teacher')">Teacher</button>
+    <button onclick="showScreen('demo')">Live Demo</button>
+  </nav>
+</header>
+
+<main>
+  <!-- LEARN -->
+  <section id="learn" class="screen">
+    <h2 id="wordTitle">banana</h2>
+    <div id="circles"></div>
+    <button onclick="playWord()">Play</button>
+  </section>
+
+  <!-- QUIZ -->
+  <section id="quiz" class="screen hidden">
+    <h2>Quiz</h2>
+    <button onclick="startQuiz()">Play Sound</button>
+    <div id="choices"></div>
+    <p id="score">Score: 0</p>
+  </section>
+
+  <!-- RECORD -->
+  <section id="record" class="screen hidden">
+    <h2>Record</h2>
+    <button onclick="startRecording()">Record</button>
+    <button onclick="stopRecording()">Stop</button>
+    <audio id="playback" controls></audio>
+  </section>
+
+  <!-- TEACHER -->
+  <section id="teacher" class="screen hidden">
+    <h2>Teacher Builder</h2>
+    <input id="newWord" placeholder="Enter word">
+    <input id="pattern" placeholder="Stress pattern e.g. 010">
+    <button onclick="saveWord()">Save</button>
+  </section>
+
+  <!-- LIVE DEMO -->
+  <section id="demo" class="screen hidden">
+    <h2>Live Tap Demo</h2>
+    <button onclick="tap('0')">Unstressed</button>
+    <button onclick="tap('1')">Stressed</button>
+  </section>
+
+</main>
+
+<script src="dictionary.js"></script>
+<script src="audio.js"></script>
+<script src="recorder.js"></script>
+<script src="quiz.js"></script>
+<script src="app.js"></script>
+
+</body>
+</html>

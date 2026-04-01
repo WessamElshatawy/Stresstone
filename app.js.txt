@@ -1,0 +1,27 @@
+function showScreen(id) {
+  document.querySelectorAll(".screen").forEach(s => s.classList.add("hidden"));
+  document.getElementById(id).classList.remove("hidden");
+}
+
+function loadWord() {
+  document.getElementById("wordTitle").innerText = currentWord.word;
+  let container = document.getElementById("circles");
+  container.innerHTML = "";
+  currentWord.stress.split("").forEach(s => {
+    let div = document.createElement("div");
+    div.className = "circle";
+    container.appendChild(div);
+  });
+}
+
+function animateCircle(i, stressed) {
+  let circles = document.querySelectorAll(".circle");
+  if (stressed) circles[i].classList.add("stressed");
+  setTimeout(() => circles[i].classList.remove("stressed"), 300);
+}
+
+function playWord() {
+  playStress(currentWord.stress);
+}
+
+loadWord();

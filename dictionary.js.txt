@@ -1,0 +1,8 @@
+const WORDS = [
+  { word: "banana", stress: "010" },
+  { word: "table", stress: "10" },
+  { word: "guitar", stress: "01" },
+  { word: "computer", stress: "010" }
+];
+
+let currentWord = WORDS[0];
