@@ -36,7 +36,27 @@ function tap(type) {
     playTone(250, 120, instrument);
     showTap(false);
   }
+function startRhythmRecording() {
+  rhythm = [];
+  recording = true;
+  startTime = Date.now();
+  alert("Recording started");
+}
 
+function stopRhythmRecording() {
+  recording = false;
+  alert("Recording stopped");
+}
+
+function playRhythm() {
+  if (rhythm.length === 0) return;
+
+  rhythm.forEach(event => {
+    setTimeout(() => {
+      tap(event.type);
+    }, event.time);
+  });
+}
   if (recording) {
     rhythm.push({
       type: type,
