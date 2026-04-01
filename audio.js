@@ -1,10 +1,26 @@
 const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 
+// Unlock audio
 document.addEventListener('click', () => {
-  if (audioCtx.state === 'suspended') {
-    audioCtx.resume();
-  }
+  if (audioCtx.state === 'suspended') audioCtx.resume();
 });
+
+// Map instrument type to audio file
+const instrumentFiles = {
+  "bell": "bell.mp3",
+  "drum": "drum.mp3",
+  "piano": "piano.mp3"
+};
+
+// Play selected instrument
+function playAudio(type) {
+  const audioFile = instrumentFiles[type];
+  if (!audioFile) return;
+
+  const audio = new Audio(audioFile);
+  audio.currentTime = 0;
+  audio.play();
+}
 
 let rhythm = [];
 let recording = false;
