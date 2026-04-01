@@ -9,9 +9,9 @@ document.addEventListener('click', () => {
 
 // Map instrument type to audio file
 const instrumentFiles = {
-  "bell": "bell.mp3",
-  "drum": "drum.mp3",
-  "piano": "piano.mp3"
+  "piano": "piano.wav",
+  "drum": "drum.wav",
+  "bell": "bell.wav"
 };
 
 // Rhythm recording
@@ -20,24 +20,33 @@ let recording = false;
 let startTime = 0;
 
 // Play MP3 audio for selected instrument
-function playAudio(type) {
-  const audioFile = instrumentFiles[type];
+function playAudio(instrument) {
+  const audioFile = instrumentFiles[instrument];
   if (!audioFile) return;
 
-  const audio = new Audio(audioFile);
-  audio.currentTime = 0;
-  audio.play();
+  // Use fetch + AudioContext to play WAV reliably
+  fetch(audioFile)
+    .then(response => response.arrayBuffer())
+    .then(arrayBuffer => audioCtx.decodeAudioData(arrayBuffer))
+    .then(audioBuffer => {
+      const source = audioCtx.createBufferSource();
+      source.buffer = audioBuffer;
+      source.connect(audioCtx.destination);
+      source.start();
+    })
+    .catch(err => console.error("Audio error:", err));
 }
 
 // Tap function: plays audio and visual feedback, records if recording
 function tap(stressType) {
-  let instrument = document.getElementById("instrument").value;
+  const instrument = document.getElementById("instrument").value;
+  const stressed = stressType === "1";
 
-  // Play the selected audio file
+  // Play the audio (same for stressed/unstressed)
   playAudio(instrument);
 
-  // Visual feedback
-  showTap(stressType === "1");
+  // Visual feedback changes for stress
+  showTap(stressed);
 
   // Record rhythm if recording
   if (recording) {
