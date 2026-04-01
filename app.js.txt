@@ -26,4 +26,8 @@ function playWord() {
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('service-worker.js');
 }
+function nextWord() {
+  currentWord = WORDS[Math.floor(Math.random() * WORDS.length)];
+  loadWord();
+}
 loadWord();
