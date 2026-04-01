@@ -25,6 +25,7 @@
     <h2 id="wordTitle">banana</h2>
     <div id="circles"></div>
     <button onclick="playWord()">Play</button>
+    <button onclick="nextWord()">Next Word</button>
   </section>
 
   <!-- QUIZ -->
