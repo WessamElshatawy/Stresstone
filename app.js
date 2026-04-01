@@ -30,4 +30,8 @@ function nextWord() {
   currentWord = WORDS[Math.floor(Math.random() * WORDS.length)];
   loadWord();
 }
+document.addEventListener("keydown", (e) => {
+  if (e.key === "a") tap("0"); // unstressed
+  if (e.key === "s") tap("1"); // stressed
+});
 loadWord();
