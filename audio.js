@@ -1,3 +1,5 @@
+// audio.js
+
 const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 
 // Unlock audio
@@ -12,7 +14,12 @@ const instrumentFiles = {
   "piano": "piano.mp3"
 };
 
-// Play selected instrument
+// Rhythm recording
+let rhythm = [];
+let recording = false;
+let startTime = 0;
+
+// Play MP3 audio for selected instrument
 function playAudio(type) {
   const audioFile = instrumentFiles[type];
   if (!audioFile) return;
@@ -22,36 +29,43 @@ function playAudio(type) {
   audio.play();
 }
 
-let rhythm = [];
-let recording = false;
-let startTime = 0;
-
-function playTone(freq, duration, type="sine") {
-  const osc = audioCtx.createOscillator();
-  const gain = audioCtx.createGain();
-
-  osc.type = type;
-  osc.frequency.value = freq;
-
-  osc.connect(gain);
-  gain.connect(audioCtx.destination);
-
-  gain.gain.value = 0.3;
-
-  osc.start();
-  setTimeout(() => osc.stop(), duration);
-}
-
-function tap(type) {
+// Tap function: plays audio and visual feedback, records if recording
+function tap(stressType) {
   let instrument = document.getElementById("instrument").value;
 
-  if (type === "1") {
-    playTone(600, 200, instrument);
-    showTap(true);
-  } else {
-    playTone(250, 120, instrument);
-    showTap(false);
+  // Play the selected audio file
+  playAudio(instrument);
+
+  // Visual feedback
+  showTap(stressType === "1");
+
+  // Record rhythm if recording
+  if (recording) {
+    rhythm.push({
+      type: stressType,
+      time: Date.now() - startTime
+    });
   }
+}
+
+// Visual feedback for tap
+function showTap(stressed) {
+  let visual = document.getElementById("tapVisual");
+  let circle = document.createElement("div");
+
+  circle.style.width = "30px";
+  circle.style.height = stressed ? "60px" : "30px";
+  circle.style.background = stressed ? "red" : "blue";
+  circle.style.display = "inline-block";
+  circle.style.margin = "5px";
+  circle.style.borderRadius = "50%";
+
+  visual.appendChild(circle);
+
+  setTimeout(() => circle.remove(), 500);
+}
+
+// Rhythm recording functions
 function startRhythmRecording() {
   rhythm = [];
   recording = true;
@@ -72,11 +86,4 @@ function playRhythm() {
       tap(event.type);
     }, event.time);
   });
-}
-  if (recording) {
-    rhythm.push({
-      type: type,
-      time: Date.now() - startTime
-    });
-  }
 }
