@@ -1,3 +1,8 @@
+document.addEventListener('click', () => {
+  if (audioCtx.state === 'suspended') {
+    audioCtx.resume();
+  }
+});
 document.body.addEventListener('click', () => {
   audioCtx.resume();
 });
