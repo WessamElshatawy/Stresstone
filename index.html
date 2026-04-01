@@ -63,10 +63,15 @@
   <option value="bell">Bell</option>
 </select>
 
-  <div id="tapVisual"></div>
+<div id="tapVisual"></div>
 
-  <button onclick="tap('0')">Unstressed</button>
-  <button onclick="tap('1')">Stressed</button>
+<button onclick="startRhythmRecording()">Start Recording</button>
+<button onclick="stopRhythmRecording()">Stop Recording</button>
+<button onclick="playRhythm()">Play Rhythm</button>
+
+<!-- Stress buttons example -->
+<button onclick="tap('1')">Stressed</button>
+<button onclick="tap('0')">Unstressed</button>
 
   <br><br>
   <button onclick="startRhythmRecording()">Start Recording Rhythm</button>
