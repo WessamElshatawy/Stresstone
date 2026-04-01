@@ -38,4 +38,11 @@ function playStress(pattern) {
     }, time);
     time += 500;
   });
+  function tap(type) {
+  if (type === "1") {
+    playTone(600, 200); // stressed
+  } else {
+    playTone(250, 120); // unstressed
+  }
+}
 }
